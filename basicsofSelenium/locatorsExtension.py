@@ -17,7 +17,7 @@ print(driver.find_element_by_css_selector("form[name='login'] label:nth-child(3)
 #difference between rel xpath and abs xpath // abs start from the beginnign whole html code. rel xpath: related(shorter simpler)
 
 
-#  SELECT DROPDOWN !!!
+#  SELECT DROPDOWN STATIC!!!
 # select class provide the methods to handle the options in dropdown 
 # if the select dropdown is STATIC -> You can rely on the select_by_visible approach or select by index.
 # It might be sth DYNAMIC therefore, to be able to use, things like (0)th. index you need to be sure the data provided is STATIC!
@@ -27,3 +27,22 @@ dropdown = Select(driver.find_element_by_id("exampleFormControlSelect1"))
 dropdown.select_by_visible_text("Female")
 dropdown.select_by_index(0)
 
+# SELECT DROPDOWN DYNAMIC!!!
+# first of all we went to the section, where we will type in what we search. for ex. ind of india's
+# After typing in "ind" what we get will be bunch of country names. So we wanted those country names to be stored in a variable, so that we can match with India and get it clicked.
+# Assertion!!! because the page is not being refreshed after you typed in what you look for. how to assert then?
+# So how we solved it; bcause value attribute of the section, is being updated constantly with your text. You can get the attribute value and compare it with India
+
+driver.find_element_by_id("autosuggest").send_keys("ind")
+time.sleep(2)
+
+countries = driver.find_element_by_css_selector("li[class='ui-menu-item'] a")
+print(len(countries))
+
+
+for country in countries:
+    if country.text == "India":
+        country.click()
+        break
+print(driver.find_element_by_id("autosuggest").text)
+assert driver.find_element_by_id("autosuggest").get_attribute('value') == "India"
