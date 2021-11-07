@@ -3,7 +3,7 @@
 from selenium import webdriver
 
 driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe")
-driver.get("https://login.salesforce.com/")
+driver.get("https://www.login.salesforce.com/")
 
 driver.find_element_by_css_selector("#username").send_keys("Alpay") # by attribute which is username
 driver.find_element_by_css_selector(".password").send_keys("qwe456") # by class
@@ -46,3 +46,18 @@ for country in countries:
         break
 print(driver.find_element_by_id("autosuggest").text)
 assert driver.find_element_by_id("autosuggest").get_attribute('value') == "India"
+
+# Handling the CheckBoxes Dynamically!!
+# we assert it by using is_selected!!
+
+driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe")
+driver.get("https://rahulshettyacademy.com/AutomationPractice/")
+
+checkboxes = driver.find_element_by_xpath("//input[@type='checkbox']")
+
+print(len(checkboxes))
+
+for checkbox in checkboxes:
+    checkbox.click()
+    assert checkbox.is_selected()
+    break
