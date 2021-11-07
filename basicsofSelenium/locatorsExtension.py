@@ -15,3 +15,15 @@ driver.find_element_by_xpath("//form[@name='login']/div[1]/label") # by using th
 print(driver.find_element_by_css_selector("form[name='login'] label:nth-child(3)").text) # css way of writing the similar code.
 
 #difference between rel xpath and abs xpath // abs start from the beginnign whole html code. rel xpath: related(shorter simpler)
+
+
+#  SELECT DROPDOWN !!!
+# select class provide the methods to handle the options in dropdown 
+# if the select dropdown is STATIC -> You can rely on the select_by_visible approach or select by index.
+# It might be sth DYNAMIC therefore, to be able to use, things like (0)th. index you need to be sure the data provided is STATIC!
+# we assigned Select to dropdown object now we can control over tha object.
+
+dropdown = Select(driver.find_element_by_id("exampleFormControlSelect1"))
+dropdown.select_by_visible_text("Female")
+dropdown.select_by_index(0)
+
