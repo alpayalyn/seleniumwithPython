@@ -14,3 +14,4 @@ driver.find_element_by_id("exampleCheck1").click() # I have selected the checkbo
 driver.find_element_by_xpath("//input[@type='submit']").click()  
 
 print(driver.find_element_by_class_name("alert-success").text)  # Getting the text written in the class.
+
