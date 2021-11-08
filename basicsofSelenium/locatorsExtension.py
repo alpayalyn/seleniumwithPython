@@ -58,6 +58,12 @@ checkboxes = driver.find_element_by_xpath("//input[@type='checkbox']")
 print(len(checkboxes))
 
 for checkbox in checkboxes:
-    checkbox.click()
-    assert checkbox.is_selected()
-    break
+    if checkbox.get_attribute("value") == "option2":
+        checkbox.click()
+        assert checkbox.is_selected()
+
+# Handling the RadioButton
+# we didn't prefer choosing for loop in the radio button, but used the feature of array
+radiobuttons = driver.find_element_by_name("radiobutton")
+radiobuttons[2].click()
+assert radiobuttons[2].is_selected()
