@@ -7,6 +7,7 @@ from selenium import webdriver
 driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe")
 # when I put implicit wait as below, it means, my code will wait for 5sec till my python code works. 
 # If the code works before 5secs, it will work, and if it wont work it will wait for 5 secs, to get work. If time will be longer than 5 secs it will fail
+# if you think you have fast environment go with explicit, if you dont have well server use implicit.
 driver.implicitly_wait(5)
 # wait until 5 seconds if object is not displayed
 # global 
