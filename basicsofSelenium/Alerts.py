@@ -5,7 +5,7 @@
 from selenium import webdriver
 
 driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe")
-driver.get("https:{{rahulshettyacademy.com/AutomationPractice /")
+driver.get("https://https://www.lcwaikiki.com/tr-TR/TR")
 
 driver.find_element_by_css_selector("#name").send_keys(validateText)
 driver.find_element_by_id("alertbtn").click()
