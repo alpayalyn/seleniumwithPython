@@ -1,39 +1,43 @@
 from selenium import webdriver
-driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe")
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
 
-driver.get("https://www.lcwaikiki.com/tr-TR/TR")
+
 
 class LCW:
-    CATEGORY_PAGE_1 = (By.CSS_SELECTOR, '.sf-with-ul')
-    CHOOSE_SIZE = (By.CSS_SELECTOR, '//a[@size='M']') # [0] sıfırı alması lazım ama almadi SS kontrol https://prnt.sc/203kf75
-    PRODUCT_PAGE = (By.CSS_SELECTOR, '.product-item-wrapper')
-    ADD_TO_CART = (By.CSS_SELECTOR, '.col-xl-12')
-    CART_PAGE = (By.CSS_SELECTOR, '.header-cart')
-    MAIN_PAGE = (By.CSS_SELECTOR, '.header-logo.img-logo')
-
-    HEADER_CONTAINER = (By.CSS_SELECTOR, '.div-header-container') #check for first page
-    MOST_SOLD = (By.CSS_SELECTOR, '.uzun.visible-lg.visible-md') #check for second page
-    ADD_TO_CART_CHECK = (By.CSS_SELECTOR, '.col-xs-12"') #check for add to cart
-    MEN_BREADCRUMB = (By.xp, "//a[@href='/tr-TR/TR/urun-grubu/erkek']") # $x("//a[@href='/tr-TR/TR/urun-grubu/erkek']")[2]
-    CART_PAGE_CHECK = (By.CSS_SELECTOR, '.cart-square-link')
+    CATEGORY_PAGE_1 = (By.CLASS_NAME, '.sf-with-ul') 
+    PRODUCT_PAGE = (By.CLASS_NAME, '.product-item-wrapper')
+    ADD_TO_CART = (By.CLASS_NAME, '.col-xl-12')
+    CART_PAGE = (By.CLASS_NAME, '.header-cart')
+    MAIN_PAGE = (By.CLASS_NAME, '.header-logo.img-logo')
+    HEADER_CONTAINER = (By.CLASS_NAME, '.div-header-container') #check for first page
+    MOST_SOLD = (By.CLASS_NAME, '.uzun.visible-lg.visible-md') #check for second page
+    ADD_TO_CART_CHECK = (By.CLASS_NAME, '.col-xs-12"') #check for add to cart
+    #MEN_BREADCRUMB = (By.xp, "//a[@href='/tr-TR/TR/urun-grubu/erkek']") # $x("//a[@href='/tr-TR/TR/urun-grubu/erkek']")[2]
+    CART_PAGE_CHECK = (By.CLASS_NAME, '.cart-square-link')
+    WEBSITE = "https://www.lcwaikiki.com/tr-TR/TR"
 
     def __init__(self):
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome("C:/seleniumdriver/chromedriver")
         self.driver.maximize_window()
-        self.driver.get(self.website)
+        self.driver.get(self.WEBSITE)
         self.wait = WebDriverWait(self.driver, 15)
 
     def test_navigate(self):
-        assert self.wait.until(ec.element_to_be_clickable(self.HEADER_CONTAINER))[0].is_displayed() "En üstteki header yoktur bu da anasayfada olmadığımızı belirtir." #We are trying to be sure about are we on main page or not
+        assert self.wait.until(ec.presence_of_element_located(self.HEADER_CONTAINER))[0].is_displayed()
         self.wait.until(ec.presence_of_all_elements_located(self.CATEGORY_PAGE_1))[1].click()
-        assert self.wait.until(ec.element_to_be_clickable(self.MEN_BREADCRUMB))[2].is_displayed() "There is no 'Men' section in breadcrumb" #We are trying to be sure about are we on product page or not
+        #assert self.wait.until(ec.presence_of_element_located(self.MEN_BREADCRUMB))[2].is_displayed()
         self.wait.until(ec.presence_of_all_elements_located(self.PRODUCT_PAGE))[1].click() # click the item
-        assert self.wait.until(ec.element_to_be_clickable(self.ADD_TO_CART_CHECK))[10].is_displayed() "check for add to cart and there is none." #We are trying to be sure about are we on product page or not
+        assert self.wait.until(ec.presence_of_element_located(self.ADD_TO_CART_CHECK))[10].is_displayed()
         self.wait.until(ec.presence_of_all_elements_located(self.CHOOSE_SIZE_PAGE))[0].click()
         # ürün eklendi ancak sonrasındaki kontrol nasıl yapılaiblir onu düşün. sepete git çıkıyor karşına ondan yürüyebilirsin.
         self.wait.until(ec.presence_of_all_elements_located(self.CART_PAGE))[0].click()
-        assert self.wait.until(ec.element_to_be_clickable(self.CART_PAGE_CHECK)).is_displayed() "Ödeme sayfasına geçiniz kısmı yoktur butonu yoktur." #We are trying to be sure about are we on product page or not
+        assert self.wait.until(ec.presence_of_element_located(self.CART_PAGE_CHECK)).is_displayed()
         self.wait.until(ec.presence_of_all_elements_located(self.MAIN_PAGE))[0].click()
-        assert self.wait.until(ec.element_to_be_clickable(self.HEADER_CONTAINER)).is_displayed() "En üstteki header yoktur bu da anasayfada olmadığımızı belirtir." #We are trying to be sure about are we on main page or not
+        assert self.wait.until(ec.presence_of_element_located(self.HEADER_CONTAINER)).is_displayed()
+
+print("Selam")
+LCW().test_navigate()
 
