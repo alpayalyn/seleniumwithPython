@@ -15,6 +15,7 @@ class TestRun(unittest.TestCase):
     WEBSITE = "https://rahulshettyacademy.com/seleniumPractise/#/"
     listbut = []
     listveg = []
+    amounts = []
 
     def setUp(self):
         self.driver = webdriver.Chrome(executable_path="C:/seleniumdriver/chromedriver")
@@ -55,11 +56,27 @@ class TestRun(unittest.TestCase):
         self.driver.find_element_by_class_name("promoCode").send_keys("rahulshettyacademy")
         time.sleep(1)
         self.driver.find_element_by_css_selector("button[class='promoBtn']").click()
-        time.sleep(5)
+        time.sleep(2)
         discountAfter = self.driver.find_element_by_css_selector("span.discountAmt").text
         assert not discountEarlier == discountAfter
 
-        time.sleep(5)
+        self.amounts = self.driver.find_elements_by_xpath("//tbody/tr/td[5]/p")
+        totalAmount = 0
+        
+        for amount in self.amounts:
+            totalAmount = totalAmount + int(amount.text)
+        print(totalAmount)
+
+        time.sleep(2)
+
+
+
+
+
+
+
+
+        
 
 if __name__ == "__main__":
     unittest.main()
