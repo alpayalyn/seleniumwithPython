@@ -1,5 +1,9 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
 
 driver = webdriver.Chrome(executable_path="C:/seleniumdriver/chromedriver")
 driver.get("https://rahulshettyacademy.com/angularpractice/")
@@ -21,3 +25,13 @@ for product in products:
 driver.find_elements_by_css_selector("a[class*='btn-primary']").click()
 driver.find_element_by_xpath("//button[@class='btn btn-success']").click()
 driver.find_element_by_id("country").send_keys("Germany")
+
+wait = WebDriverWait(driver, 7)
+wait.until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "Germany")))
+driver.find_element_by_link_text("Germany").click()
+driver.find_element_by_xpath("//div[@class='checkbox checkbox-primary']").click()
+driver.find_element_by_css_selector("[type='submit']").click()
+successText = driver.find_element_by_class_name("alert-success").text
+
+assert "Success! Thank you!" in successText
+driver.get_screenshot_as_file("screen.png")
