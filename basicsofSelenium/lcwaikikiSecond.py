@@ -9,7 +9,8 @@ import time
 
 class TestRun(unittest.TestCase):
     WEBSITE = "https://www.lcwaikiki.com/tr-TR/TR"
-    CATEGORY_PAGE_1 = (By.CSS_SELECTOR, '.sf-with-ul')
+    CATEGORY_PAGE = (By.CSS_SELECTOR, '.sf-with-ul')
+    CATEGORY_PAGE_IN = (By.CSS_SELECTOR, '.visible-md')
     PRODUCT_PAGE = (By.CSS_SELECTOR, '.product-item-wrapper')
     ADD_TO_CART = (By.CSS_SELECTOR, '.col-xl-12')
     CART_PAGE = (By.CSS_SELECTOR, '.bndl-shopping-bag')
@@ -28,11 +29,15 @@ class TestRun(unittest.TestCase):
 
     def test_LCW(self):
         assert self.wait.until(ec.presence_of_all_elements_located(self.HEADER_CONTAINER))[0].is_displayed()
-        self.wait.until(ec.presence_of_all_elements_located(self.CATEGORY_PAGE_1))[1].click()
-
+        self.wait.until(ec.presence_of_all_elements_located(self.CATEGORY_PAGE))[1].click()
+        
+        time.sleep(2) #kaldır / variable tek sefer kul için. / anlamli locator, xpath->cssselector
+        self.wait.until(ec.presence_of_all_elements_located(self.CATEGORY_PAGE_IN))[5].click()
+        
         time.sleep(2)
         erkekText = self.wait.until(ec.presence_of_all_elements_located(self.MEN_BREADCRUMB))[0].text
-        assert erkekText == "Erkek", "This page doesnt contain Erkek BreadCrumb"
+        print(erkekText)
+        assert erkekText == "Online Özel Ürünler", "This page doesnt contain Online Özel Ürünler Breadcrumb"   
         self.wait.until(ec.presence_of_all_elements_located(self.PRODUCT_PAGE))[1].click() 
 
         time.sleep(2)
