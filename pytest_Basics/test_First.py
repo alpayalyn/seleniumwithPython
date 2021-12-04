@@ -9,7 +9,8 @@
 # you can skip tests with @ppytest.mark.skip
 # @pytest.mark.xfail
 # Fixtures are used as setupp and teardown methods for test cases- conftest file to generalize fixture and make it available to all test cases.
-
+# data driven and parameterization can be done wit hreturn statements in tuple format 
+# when you define fixture scope to class only, it will run once before class is initiated and at the end
 # Running only Smoke Tests. And how to group them?
 
 import pytest
