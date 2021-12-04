@@ -8,6 +8,7 @@
 # you can mark (tag) tests @pytest.mark.smoke and then run with -m
 # you can skip tests with @ppytest.mark.skip
 # @pytest.mark.xfail
+# Fixtures are used as setupp and teardown methods for test cases- conftest file to generalize fixture and make it available to all test cases.
 
 # Running only Smoke Tests. And how to group them?
 
