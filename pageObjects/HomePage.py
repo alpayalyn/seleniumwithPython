@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 
+from pageObjects.CheckOutPage import CheckOutPage
+
 class HomePage:
 
     def __init__(self, driver): # I added driver after self, pass the argumant of the driver also.
@@ -9,6 +11,8 @@ class HomePage:
 
     def shopItems(self):
         # to be able to use your actual driver below, you need to create constructor
-        return self.driver.find_element(*HomePage.SHOP) # class variable if it were used with self that would be with self. If you add * it will read "shop" as Tuple
-    
+        self.driver.find_element(*HomePage.SHOP).click()
+        checkOutPage = CheckOutPage(self.driver)
+        return checkOutPage
+        # return self.driver.find_element(*HomePage.SHOP) # class variable if it were used with self that would be with self. If you add * it will read "shop" as Tuple
     
