@@ -1,14 +1,37 @@
+from _typeshed import Self
 import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pageObjects.CheckoutPage import CheckoutPage
+from pageObjects.HomePage import HomePage
 from utilities.BaseClass import BaseClass
 
 # @pytest.mark.usefixtures("setup") by navigating to the parent class which is a class we created in another folder,
 # it will go there and this file will use that class's @pytest.mark.usefixtures feature.
 
 class TestOne(BaseClass):
-    def testsE2E(self):
+
+    def test_E2E(self):
+
+        homePage = HomePage(self.driver) # we removed one of the locators in our test case, and handled it by using page object.
+        homePage.shopItems().click()
+        checkOutPage = CheckoutPage(self.driver)
+        cards = checkOutPage.getCardTitles()
+        i = -1
+        for card in cards:
+            i = i + 1
+            cardText = card.text
+            print(cardText)
+            if cardText == "Blackberry":
+                checkOutPage.getCardFooter()[i].click()
+
+        self.driver.find_element_by_css_selector("a[class*='btn-primary']").click()
+        checkOutPage.checkOutItems().click()
+        self.driver.find_element_by_id("country").send_keys("Germany")
+        
+
+
         self.driver.find_element_by_xpath("//a['@class=nav-link']").click() # Its valid only if there is text as a link.
         products = self.driver.find_elements_by_xpath("//div[@class='card h-100']")    #parent child travels.
         # You can go forward by adding element by element to the variable that you defined a path which starts with "//" then u can just add rest according to where you want to head basically.
