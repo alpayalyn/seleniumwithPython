@@ -3,7 +3,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pageObjects.CheckoutPage import CheckoutPage
+from pageObjects.CheckOutPage import CheckOutPage
 from pageObjects.HomePage import HomePage
 from utilities.BaseClass import BaseClass
 
@@ -14,9 +14,10 @@ class TestOne(BaseClass):
 
     def test_E2E(self):
 
-        homePage = HomePage(self.driver) # we removed one of the locators in our test case, and handled it by using page object.
-        homePage.shopItems().click()
-        checkOutPage = CheckoutPage(self.driver)
+        # MAKE IT MORE READABLE ;;; Only once we created an object like below row, for different page types, we defined their intsances in their own Methods and after that, in the E2E we assigned those instances to the next step's instances.    
+        homePage = HomePage(self.driver) # we removed one of the locators in our test case, and handled it by using page object. Like this self driver assignment, we need to do, other pages' in their pageObject files.
+        checkOutPage = homePage.shopItems() # this instance is like a check Point. We have come so far(Homepage is done) OK with this now we can proceed to checkout page.
+        # checkOutPage = CheckoutPage(self.driver) No more required because we defined the object in CheckOutPage
         cards = checkOutPage.getCardTitles()
         i = -1
         for card in cards:
@@ -27,7 +28,7 @@ class TestOne(BaseClass):
                 checkOutPage.getCardFooter()[i].click()
 
         self.driver.find_element_by_css_selector("a[class*='btn-primary']").click()
-        checkOutPage.checkOutItems().click()
+        confirmPage = checkOutPage.checkOutItems().click() # At this point we are done with checkout so we can proceed with  Confirm Page, so I assign this to Confirm.
         self.driver.find_element_by_id("country").send_keys("Germany")
         
 
