@@ -29,8 +29,12 @@ class TestOne(BaseClass):
 
         self.driver.find_element_by_css_selector("a[class*='btn-primary']").click()
         confirmPage = checkOutPage.checkOutItems().click() # At this point we are done with checkout so we can proceed with  Confirm Page, so I assign this to Confirm.
-        self.driver.find_element_by_id("country").send_keys("Germany")
-        
+        self.driver.find_element_by_id("country").send_keys("Ger")
+
+        # By using utilities, we can simplfy our code from find element bla bla perspective. It will just handle it in utilities. BaseClass.py
+        # Custom Utility is below.
+        self.verifyLinkPresence("Germany")
+             
 
 
         self.driver.find_element_by_xpath("//a['@class=nav-link']").click() # Its valid only if there is text as a link.
