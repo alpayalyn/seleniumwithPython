@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-
+# use conftest when the feature you are oging to use will be used by multiple test cases.
 # by using below code we will be able to change the browser that we use by command line
 # in the command screen by passing --browser_name firefox or chrome you will open the specific browser thanks to below code.
 def pytest_addoption(parser):
